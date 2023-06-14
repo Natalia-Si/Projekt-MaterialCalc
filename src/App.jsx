@@ -1,17 +1,19 @@
-import { useState } from 'react'
-
-import './App.css'
-import MainNav from "./Components/MainNav";
+import React from "react";
+import TopBar from "./Components/topbar/TopBar.jsx";
+import Sidebar from "./Components/Sidebar/Sidebar";
+import "./App.css"
 
 function App() {
 
 
   return (
-    <>
-      <div>
-       <MainNav/>
-      </div>
-    </>
+    <div>
+      <TopBar/>
+        <div className="container">
+            <Sidebar/>
+            <div className="others">other pages</div>
+        </div>
+    </div>
   )
 }
 

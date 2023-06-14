@@ -1,0 +1,51 @@
+.topbar {
+    width: 100%;
+    height: 120px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.topbarWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.logo {
+    background-color: #202123 ;
+    color: white;
+    font-weight: bold;
+    font-size: 1.3rem;
+    flex:1;
+    height: 100%;
+    text-align: center;
+    line-height: 120px;
+}
+
+.topcenter {
+    background-color: white;
+    flex:3;
+    font-weight: bolder;
+    font-size: 1.5rem;
+}
+
+.topcenter p {
+    margin-left: 20px;
+}
+.topright {
+    flex:1;
+}
+
+.userContainer {
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.userContainerIcon {
+    margin-right: 10px;
+}
+
