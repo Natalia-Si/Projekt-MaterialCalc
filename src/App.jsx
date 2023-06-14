@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import './App.css'
+import MainNav from "./Components/MainNav";
 
 function App() {
 
@@ -8,7 +9,7 @@ function App() {
   return (
     <>
       <div>
-       Application
+       <MainNav/>
       </div>
     </>
   )
