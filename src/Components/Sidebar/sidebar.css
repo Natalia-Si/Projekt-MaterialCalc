@@ -35,3 +35,12 @@
 .sidebarIcon {
     margin-right: 10px;
 }
+
+.sidebarListBottom {
+    position: fixed;
+    bottom: 0;
+    border-top: 1px solid #8c8c8d;
+    padding-top: 10px;
+    margin-top: 10px;
+    width: 15%;
+}

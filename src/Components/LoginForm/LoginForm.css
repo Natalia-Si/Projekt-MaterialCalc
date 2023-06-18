@@ -1,0 +1,55 @@
+.formContainer {
+    width: 550px;
+    height: 370px;
+    background-color: white;
+    border-radius: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form {
+    width: 400px;
+    height: 250px;
+
+}
+
+.form-title{
+    margin-top: 10px;
+    font-size: 22px;
+    text-align: center;
+
+}
+
+input {
+    width: 400px;
+    height: 40px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.form label,
+.form textarea {
+    display: block;
+    width: 600px;
+    padding-bottom: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    margin-top: 20px;
+    background-color: black;
+    color: white;
+    padding: 8px 16px 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 160px
+}
+
+label {
+    padding: 5px;
+}
