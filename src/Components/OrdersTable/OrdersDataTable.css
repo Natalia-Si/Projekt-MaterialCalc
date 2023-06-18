@@ -1,0 +1,31 @@
+.datatable{
+    padding: 20px;
+    background-color: white;
+    margin: 50px 30px;
+    border-radius: 34px;
+    flex: 4;
+}
+
+.orderItemEdit {
+    cursor: pointer;
+    padding:5px 10px;
+}
+.orderItemDelete {
+    cursor: pointer;
+}
+
+.addOrderBtn {
+    width: 195px;
+    height: 35px;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 34px;
+    display: flex;
+    align-items: center;
+
+}
+
+.addOrderBtn span {
+    margin-left: 10px;
+    font-size: 14px;
+}

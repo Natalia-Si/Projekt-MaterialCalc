@@ -4,12 +4,13 @@ import Sidebar from "./Components/Sidebar/Sidebar";
 import "./App.css"
 import WelcomePage from "./Pages/Welcome/WelcomePage.jsx";
 import Pulpit from "./Pages/Pulpit/Pulpit";
+import OrderList from "./Pages/OrderList/OrderList";
 import {
     BrowserRouter as Router,
     Routes,
     Route,
-    Link
-} from "react-router-dom";
+    } from "react-router-dom";
+
 
 
 
@@ -22,6 +23,7 @@ function App() {
             <Routes>
                 <Route path="/" element={ <WelcomePage/> } />
                 <Route path="/pulpit" element={ <Pulpit/> }/>
+                <Route path="/orderlist" element={ <OrderList/> }/>
             </Routes>
         </div>
     </Router>
