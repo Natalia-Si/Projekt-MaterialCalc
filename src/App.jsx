@@ -10,6 +10,7 @@ import {
     Routes,
     Route,
     } from "react-router-dom";
+import CreateOrder from "./Pages/CreateOrder/createOrder";
 
 
 
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/" element={ <WelcomePage/> } />
                 <Route path="/pulpit" element={ <Pulpit/> }/>
                 <Route path="/orderlist" element={ <OrderList/> }/>
+                <Route path="/orderlist/cerateOrder" element={ <CreateOrder/> }/>
             </Routes>
         </div>
     </Router>

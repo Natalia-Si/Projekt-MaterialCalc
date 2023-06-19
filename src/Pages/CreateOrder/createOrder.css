@@ -1,0 +1,77 @@
+.createOrder {
+    flex: 4;
+    background-color: #f3f3f3;
+    position: relative;
+    z-index: 1;
+}
+
+.orderContainer {
+    background-color: white;
+    margin: 20px 20px 20px 20px;
+    border-radius: 34px;
+}
+
+.orderTitleContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+    width: 80%;
+    position: relative;
+}
+
+.orderTitleContainer::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 50px);
+    height: 3px;
+    background-color: black;
+}
+
+.orderInfoContainer {
+    padding: 20px 50px;
+}
+
+.orderCode {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.orderCode p {
+    margin-right: 50px;
+}
+
+.orderExtraInfo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.orderExtraInfo p {
+    margin-right: 10px;
+}
+
+.orderDataTable {
+    margin: 10px 50px;
+}
+
+.currencyCalculator {
+    display: flex;
+    justify-content: right;
+    margin-right: 50px;
+}
+
+.currencyCalculator::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(50%);
+    width: calc(100% + 50px);
+    height: 3px;
+    background-color: black;
+}
