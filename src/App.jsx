@@ -2,31 +2,37 @@ import React from "react";
 import TopBar from "./Components/Topbar/TopBar.jsx";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import "./App.css"
-import WelcomePage from "./Pages/Welcome/WelcomePage.jsx";
+import LoginPage from "./Pages/LoginPage/LoginPage.jsx";
 import Pulpit from "./Pages/Pulpit/Pulpit";
 import OrderList from "./Pages/OrderList/OrderList";
 import {
     BrowserRouter as Router,
     Routes,
-    Route,
-    } from "react-router-dom";
+    Route, Navigate,
+} from "react-router-dom";
 import CreateOrder from "./Pages/CreateOrder/createOrder";
 
 
-
-
 function App() {
+    const currentUser = false;
+
+    const RequireAuth = ({ children }) => {
+        console.log("currentUser:", currentUser);
+        return currentUser ? (children) : <Navigate to="/LoginPage" />;
+    };
+
+
   return (
     <Router>
       <TopBar/>
         <div className="container">
             <Sidebar/>
-            <Routes>
-                <Route path="/" element={ <WelcomePage/> } />
-                <Route path="/pulpit" element={ <Pulpit/> }/>
-                <Route path="/orderlist" element={ <OrderList/> }/>
-                <Route path="/orderlist/cerateOrder" element={ <CreateOrder/> }/>
-            </Routes>
+                <Routes>
+                    <Route path="/loginPage" element={ <LoginPage/> } />
+                    <Route path="/" element={ <Pulpit /> } />
+                    <Route path="/OrderList" element={ <OrderList/> }/>
+                    <Route path="/createOrder" element={ <CreateOrder/> }/>
+                </Routes>
         </div>
     </Router>
   )

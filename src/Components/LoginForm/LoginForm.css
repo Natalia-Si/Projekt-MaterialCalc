@@ -53,3 +53,11 @@ button {
 label {
     padding: 5px;
 }
+
+.warning-msg {
+    display: flex;
+    justify-content: center;
+    font-size: 12px;
+    margin-top: 10px;
+    color: red;
+}

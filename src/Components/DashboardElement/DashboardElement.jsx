@@ -4,6 +4,7 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import PersonIcon from '@mui/icons-material/Person';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import {Link} from "react-router-dom";
 
 export default function DashboardElement () {
     return (
@@ -13,9 +14,12 @@ export default function DashboardElement () {
                     <div className="shopBtn">
                         <LocalMallIcon fontSize="medium"/>
                     </div>
-                    <span>Dodaj <br/>zamówienie</span>
+                    <span className="button-text">Dodaj <br/>zamówienie</span>
                 </div>
-                <AddCircleOutlineIcon  fontSize="large"/>
+                <Link to="/CreateOrder" style={{textDecoration:"none", color: "white"}}>
+                    <AddCircleOutlineIcon  fontSize="large"/>
+                </Link>
+
             </div>
 
             <div className="ListContainer">
@@ -23,9 +27,11 @@ export default function DashboardElement () {
                     <div className="ListBtn">
                         <PersonIcon/>
                     </div>
-                    <span>Zobacz <br/>zamówienia</span>
+                    <span className="button-text">Zobacz <br/>zamówienia</span>
                 </div>
-                <VisibilityIcon fontSize="large"/>
+                <Link to="/OrderList" style={{textDecoration:"none", color: "black"}}>
+                    <VisibilityIcon fontSize="large"/>
+                </Link>
             </div>
         </div>
     )

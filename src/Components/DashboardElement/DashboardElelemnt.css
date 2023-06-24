@@ -37,10 +37,6 @@
     height: 45px;
     border-radius: 16px;
 }
-span {
-    margin-left: 15px;
-    font-size: 1.2rem;
-}
 
 .ListContainer {
     position: relative;
@@ -77,3 +73,7 @@ span {
     border-radius: 16px;
 }
 
+span {
+    margin-left: 15px;
+    font-size: 1.1rem;
+}

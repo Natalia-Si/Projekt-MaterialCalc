@@ -1,12 +1,12 @@
 import React from "react";
 import "./OrderList.css"
-import OrdersDataTable from "../../Components/OrdersTable/OrdersDataTable";
+import OrderListForm from "../../Components/OrderListForm/OrderListForm.jsx";
 
 
 export default function OrderList() {
     return (
         <div className="orderList">
-            <OrdersDataTable/>
+            <OrderListForm/>
         </div>
 
     )
