@@ -1,34 +1,30 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import "./OrderListForm.css"
 import { DataGrid } from '@mui/x-data-grid';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import {Link} from "react-router-dom";
+import {OrderContext, OrderProvider} from "../OrderDataTable/OrderContext.jsx";
 
 
-//do czego mi to potrzebne >?>>>>>>???? POWINNA BYC INNA NAZWA PLIKU tutaj chodzi o liste zamówień a nie formularz
+
 
 
 export default function OrderListForm() {
 
-    const [orders, setOrders] = useState([
-        { id: 1, orderid: '1', ordercode: 'ABC123' },
-        { id: 2, orderid: '2', ordercode: 'DEF456' },
-        { id: 3, orderid: '3', ordercode: 'GHI789' },
-    ])
+    const { orders, addOrder, deleteOrder} = useContext(OrderContext);
 
 
 
-
-    const handleDeleteOrder = () => {
-        const updateOrders = orders.filter((order) => order.id !== id);
-        setOrders(updateOrders);
+    const handleDeleteOrder = (orderId) => {
+        deleteOrder(orderId);
     }
+
 
     const columns = [
         { field: 'orderid', headerName: 'Nr zamówienia', width: 300 },
-        { field: 'ordercode', headerName: 'Kod zamówienia', width: 700 },
+        { field: 'orderCode', headerName: 'Kod zamówienia', width: 700 },
         {
             field: 'actions',
             headerName: 'Akcja',
@@ -37,7 +33,7 @@ export default function OrderListForm() {
                 return (
                     <>
                         <DeleteIcon className="orderItemEdit"
-                        onClick={() => handleDeleteOrder(orderId)}
+                        onClick={() => handleDeleteOrder(params.row.id)}
                         style={{cursor: "pointer"}}/>
                         <EditIcon  className="orderItemDelete"/>
                     </>
@@ -48,18 +44,20 @@ export default function OrderListForm() {
     ];
 
     return (
-        <div className="datatable">
-            <Link to="/createOrder">
-                <button className="addBtn">
-                    <AddIcon/>
-                    <span>Dodaj zamówienie</span>
-                </button>
-            </Link>
+        <OrderProvider>
+            <div className="datatable">
+                <Link to="/createOrder">
+                    <button className="addBtn">
+                        <AddIcon/>
+                        <span>Dodaj zamówienie</span>
+                    </button>
+                </Link>
 
-            <DataGrid
-                rows={orders} disableRowSelectionOnClick
-                columns={columns}
-            />
-        </div>
+                <DataGrid
+                    rows={orders} disableRowSelectionOnClick
+                    columns={columns}
+                />
+            </div>
+        </OrderProvider>
     )
 }

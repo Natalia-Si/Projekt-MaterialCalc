@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import "./OrderDataTable.css"
-import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Select, MenuItem, TextField, IconButton, Pagination} from '@mui/material';
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Select, MenuItem, TextField, IconButton} from '@mui/material';
 import DeleteIcon from "@mui/icons-material/Delete.js";
 import AddIcon from "@mui/icons-material/Add";
 
 
 export default function OrderDataTable() {
+
     const products = [
         { id: 1, name: "Złączka rowkowana", price: 10 },
         { id: 2, name: "Kolano rowkowane", price: 20 },

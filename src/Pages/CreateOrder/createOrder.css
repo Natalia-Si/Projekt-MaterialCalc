@@ -75,3 +75,15 @@
     height: 3px;
     background-color: black;
 }
+
+.orderTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%
+
+}
+
+.orderTitle + h2 {
+    width: 200px;
+}

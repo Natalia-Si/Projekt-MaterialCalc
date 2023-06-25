@@ -1,62 +1,78 @@
-import React, {useState} from "react";
+import {OrderContext, OrderProvider} from "../../Components/OrderDataTable/OrderContext.jsx";
+import React, {useContext, useState} from "react";
 import "./createOrder.css"
 import OrderDataTable from "../../Components/OrderDataTable/OrderDataTable";
 import CurrencyCalculator from "../../Components/CurrencyCalc/CurrencyCalculator";
-import { doc, setDoc, addDoc, collection, serverTimestamp } from "firebase/firestore";
 import {db} from "../../firebase.js";
+import { addDoc, collection } from "firebase/firestore";
+import {Link, useNavigate} from "react-router-dom";
+
+
 
 export default function CreateOrder() {
 
-    const [data, setData] = useState({})
+    const {  addOrder, orderCount, setOrderCount } = useContext(OrderContext)
+    const [newOrder, setNewOrder] = useState(null);
+    const navigate = useNavigate();
 
     const handleAdd = async (e) => {
-        e.preventDefault()
-       const res = await addDoc(collection(db, "cities"), {
-            name: "Los Angeles",
-            state: "CA",
-            country: "USA",
-           timeStamp: serverTimestamp()
-        });
+        e.preventDefault();
 
-        console.log(res.id)
-    }
+        const orderCode = e.currentTarget.elements.orderCode.value;
+        console.log('Wartość pola zamówienia:', orderCode);
+
+        const order = {
+            orderid: orderCount,
+            orderCode: orderCode,
+        };
+        console.log('Wartość początkowa orderCount:', orderCount);
+
+
+        setNewOrder(order);
+        setOrderCount((prevCount) => prevCount + 1);
+
+        console.log('Inkrementacja orderCount:', orderCount);
+
+        try {
+            addOrder(order);
+            navigate("/orderList");
+        } catch (error) {
+            console.error("Błąd podczas dodawania zamówienia:", error);
+        }
+    };
 
     return(
-        <div className="createOrder">
-            <div className="orderContainer">
-                <div className="orderTitleContainer">
-                    <h2>Nr zamówienia i kod</h2>
-                    <form onSubmit={handleAdd}>
-                        <button type="submit" className="saveclosebtn">Zapisz i zamknij</button>
-                    </form>
-
-                </div>
-
-                <div className="orderInfoContainer">
-                    <div className="orderCode">
-                        <p>Kod zamówienia</p>
-                        <input placeholder="Woprowadz kod zamówienia"/>
+        <OrderProvider>
+            <div className="createOrder">
+                <div className="orderContainer">
+                    <div className="orderTitleContainer">
+                        <form onSubmit={handleAdd}>
+                            <h2>Nowe zamówienie</h2>
+                                <button type="submit" className="saveclosebtn">Zapisz i zamknij</button>
+                            <div className="orderInfoContainer">
+                                <div className="orderCode">
+                                    <p>Kod zamówienia</p>
+                                    <input name="orderCode" placeholder="Woprowadz kod zamówienia"/>
+                                </div>
+                                <div className="orderExtraInfo">
+                                    <p>Informacje dodatkowe</p>
+                                    <input placeholder="Informacje dodatkowe"/>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div className="orderExtraInfo">
-                        <p>Informacje dodatkowe</p>
-                        <input placeholder="Informacje dodatkowe"/>
+
+                    {/*    tabela z zamówieniem osobny komponent*/}
+                    <div className="orderDataTable">
+                        <OrderDataTable/>
                     </div>
-                </div>
 
-                {/*    tabela z zamówieniem osobny komponent*/}
-                <div className="orderDataTable">
-                    <OrderDataTable/>
-                </div>
-
-                {/*Kalkulator walut osobny komponent */}
-                <div className="currencyCalculator">
-                    <CurrencyCalculator/>
+                    {/*Kalkulator walut osobny komponent */}
+                    <div className="currencyCalculator">
+                        <CurrencyCalculator/>
+                    </div>
                 </div>
             </div>
-
-
-        </div>
-
-
+        </OrderProvider>
     )
 }

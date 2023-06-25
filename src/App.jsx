@@ -11,30 +11,36 @@ import {
     Route, Navigate,
 } from "react-router-dom";
 import CreateOrder from "./Pages/CreateOrder/createOrder";
+import { OrderProvider } from "./Components/OrderDataTable/OrderContext.jsx";
+import { db } from "./firebase.js";
+
 
 
 function App() {
-    const currentUser = false;
-
-    const RequireAuth = ({ children }) => {
-        console.log("currentUser:", currentUser);
-        return currentUser ? (children) : <Navigate to="/LoginPage" />;
-    };
+    // const currentUser = false;
+    //
+    // const RequireAuth = ({ children }) => {
+    //     console.log("currentUser:", currentUser);
+    //     return currentUser ? (children) : <Navigate to="/LoginPage" />;
+    // };
 
 
   return (
-    <Router>
-      <TopBar/>
-        <div className="container">
-            <Sidebar/>
-                <Routes>
-                    <Route path="/loginPage" element={ <LoginPage/> } />
-                    <Route path="/" element={ <Pulpit /> } />
-                    <Route path="/OrderList" element={ <OrderList/> }/>
-                    <Route path="/createOrder" element={ <CreateOrder/> }/>
-                </Routes>
-        </div>
-    </Router>
+      <OrderProvider>
+          <Router>
+              <TopBar/>
+              <div className="container">
+                  <Sidebar/>
+                  <Routes>
+                      <Route path="/loginPage" element={ <LoginPage/> } />
+                      <Route path="/" element={ <Pulpit /> } />
+                      <Route path="/OrderList" element={ <OrderList/> }/>
+                      <Route path="/createOrder" element={ <CreateOrder/> }/>
+                  </Routes>
+              </div>
+          </Router>
+      </OrderProvider>
+
   )
 }
 
