@@ -1,5 +1,5 @@
 import React, {createContext, useEffect, useState} from "react";
-import { collection, onSnapshot, addDoc, getDocs, deleteDoc, doc} from "firebase/firestore";
+import { collection, onSnapshot, addDoc, deleteDoc, doc} from "firebase/firestore";
 import { db } from "../../firebase.js"
 
 
@@ -14,7 +14,7 @@ export const OrderProvider = ({ children }) => {
         const unsubscribe = onSnapshot(collection(db, "orders"), (snapshot) => {
             const fetchedOrders = snapshot.docs.map((doc) => {
                 const data = doc.data();
-                data.id = doc.id; // Przypisanie unikalnego id
+                data.id = doc.id; // Przypisanie  id dla doc
                 return data;
             });
             setOrders(fetchedOrders);

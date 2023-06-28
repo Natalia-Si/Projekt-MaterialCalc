@@ -1,0 +1,58 @@
+.currencyCalc {
+    width: 530px;
+    height: 100px;
+    background-color: black;
+    color: white;
+    border-radius: 20px;
+    margin-top: 30px;
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+}
+
+.exchangeData {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+
+.currencyContainer {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+.currencyInfo span {
+    margin-bottom: 10px;
+}
+
+.currencyInfo {
+    margin-bottom: 30px;
+}
+
+.currencySelect{
+    width: 120px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.dateInfo {
+    display: flex;
+    align-items: center;
+}
+
+.dateSelect {
+    width: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.currencyConverted {
+    width: 200px;
+
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    font-weight: bold;
+}

@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import "./OrderDataTable.css"
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Select, MenuItem, TextField, IconButton} from '@mui/material';
 import DeleteIcon from "@mui/icons-material/Delete.js";
 import AddIcon from "@mui/icons-material/Add";
+import EuroIcon from "@mui/icons-material/Euro.js";
+
 
 
 export default function OrderDataTable() {
@@ -27,6 +29,12 @@ export default function OrderDataTable() {
             action: null,
         }
         ]);
+
+    const [selectedCurrency, setSelectedCurrency] = useState(""); // Wybrana waluta
+    const [exchangeRateData, setExchangeRateData] = useState({}); // Dane dotyczące kursów walut
+    const [selectedDate, setSelectedDate] = useState(""); // Wybrana data
+    const [availableDates, setAvailableDates] = useState([]);
+
 
     const getProductPrice = (productName) => {
         const product = products.find((p) => p.name === productName);
@@ -82,6 +90,26 @@ export default function OrderDataTable() {
         calculateTotalPricesRow();
     }, [selectedProducts]);
 
+    useEffect(() => {
+        const fetchExchangeRates = async () => {
+            try {
+                const response = await fetch(
+                    "http://api.nbp.pl/api/exchangerates/tables/A/?format=json"
+                );
+                const data = await response.json();
+                setExchangeRateData(data[0].rates);
+            } catch (error) {
+                console.log("Error fetching exchange rates:", error);
+            }
+        };
+
+
+
+        fetchExchangeRates();
+
+    }, []);
+
+
     const calculateTotalPricesRow = () => {
         const updatedProducts = selectedProducts.map((product) => {
             const totalPrice = product.price * product.quantity;
@@ -106,6 +134,7 @@ export default function OrderDataTable() {
         ]);
     };
 
+
     const calculateTotalSummary = () => {
         const totalSummary = selectedProducts.reduce(
             (total, product) => total + product.totalPrice,
@@ -113,6 +142,27 @@ export default function OrderDataTable() {
         );
         return totalSummary;
     };
+
+
+    const handleCurrencyChange = (e) => {
+        setSelectedCurrency(e.target.value);
+    };
+
+    const handleDateChange = (e) => {
+        setSelectedDate(e.target.value);
+    };
+
+    const convertCurrency = () => {
+        const selectedRate = exchangeRateData.find(
+            (rate) => rate.code === selectedCurrency
+        );
+        if (selectedRate) {
+            const convertedTotalSummary = calculateTotalSummary() / selectedRate.mid;
+            return convertedTotalSummary.toFixed(2);
+        }
+        return "";
+    };
+
 
     const renderTableRows = () => {
         return selectedProducts.map((product) => (
@@ -188,37 +238,91 @@ export default function OrderDataTable() {
         ));
     };
 
+
+
+    const renderCurrencyOptions = () => {
+        return Array.isArray(exchangeRateData) ? (
+            exchangeRateData.map((rate) => (
+                <option key={rate.code} value={rate.code}>
+                    {rate.code}
+                </option>
+            ))
+        ) : null;
+    };
+
+
+    const renderDateOptions = () => {
+        return availableDates.map((date, index) => (
+            <option key={index} value={date}>
+                {date}
+            </option>
+        ));
+    };
+
     return (
-        <TableContainer component={Paper}>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Produkt</TableCell>
-                        <TableCell>Rozmiar DN</TableCell>
-                        <TableCell>Kolor</TableCell>
-                        <TableCell>Ilość</TableCell>
-                        <TableCell>Cena PLN/szt</TableCell>
-                        <TableCell>Cena RAZEM</TableCell>
-                        <TableCell>Akcja</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {renderTableRows()}
-                    <TableRow>
-                        <TableCell colSpan={7} align="right">
-                            <IconButton onClick={handleAddRow}>
-                                <AddIcon />
-                            </IconButton>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell colSpan={5} align="right">
-                            <strong>Total: </strong>
-                        </TableCell>
-                        <TableCell>{calculateTotalSummary().toFixed(2)} PLN</TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <div>
+            <TableContainer component={Paper}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Produkt</TableCell>
+                            <TableCell>Rozmiar DN</TableCell>
+                            <TableCell>Kolor</TableCell>
+                            <TableCell>Ilość</TableCell>
+                            <TableCell>Cena PLN/szt</TableCell>
+                            <TableCell>Cena RAZEM</TableCell>
+                            <TableCell>Akcja</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {renderTableRows()}
+                        <TableRow className="summary">
+                            <TableCell colSpan={7} align="right">
+                                <IconButton onClick={handleAddRow}>
+                                    <AddIcon />
+                                </IconButton>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow className="total-summary">
+                            <TableCell colSpan={5} align="right">
+                                <strong>Total: </strong>
+                            </TableCell>
+                            <TableCell>{calculateTotalSummary().toFixed(2)} PLN</TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            {/*CURRENCY CALCULATOR*/}
+            <div className="currencyCalc">
+                <div className="exchangeData">
+                    <div className="logoCalc">
+                        <EuroIcon/>
+                    </div>
+                    <div className="currencyContainer">
+                        <div className="currencyInfo">
+                            <span>Przelicz na:</span>
+                            <select className="currencySelect" onChange={handleCurrencyChange}>
+                                <option value="">Wybierz walutę</option>
+                                {renderCurrencyOptions()}
+                            </select>
+                        </div>
+                        <div className="dateInfo">
+                            <span>Kurs z dnia:</span>
+                            <select className="dateSelect" onChange={handleDateChange}>
+                                <option value="">Wybierz datę</option>
+                                {renderDateOptions()}
+                            </select>
+                        </div>
+                    </div>
+                    <div className="currencyConverted">
+                        {selectedCurrency && selectedDate && (
+                            <span>
+                                {convertCurrency()} {selectedCurrency}
+                            </span>
+                            )}
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }

@@ -31,7 +31,7 @@ export default function CreateOrder() {
         setNewOrder(order);
         setOrderCount((prevCount) => prevCount + 1);
 
-        console.log('Inkrementacja orderCount:', orderCount);
+        console.log('Zwiększenie orderCount:', orderCount);
 
         try {
             addOrder(order);
@@ -69,7 +69,7 @@ export default function CreateOrder() {
 
                     {/*Kalkulator walut osobny komponent */}
                     <div className="currencyCalculator">
-                        <CurrencyCalculator/>
+
                     </div>
                 </div>
             </div>
