@@ -2,10 +2,7 @@ import {OrderContext, OrderProvider} from "../../Components/OrderDataTable/Order
 import React, {useContext, useState} from "react";
 import "./createOrder.css"
 import OrderDataTable from "../../Components/OrderDataTable/OrderDataTable";
-import CurrencyCalculator from "../../Components/CurrencyCalc/CurrencyCalculator";
-import {db} from "../../firebase.js";
-import { addDoc, collection } from "firebase/firestore";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 
 

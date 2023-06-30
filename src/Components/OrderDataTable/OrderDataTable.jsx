@@ -4,18 +4,12 @@ import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
 import DeleteIcon from "@mui/icons-material/Delete.js";
 import AddIcon from "@mui/icons-material/Add";
 import EuroIcon from "@mui/icons-material/Euro.js";
-
+import {products, sizes, colors} from "../../productsource.js";
 
 
 export default function OrderDataTable() {
 
-    const products = [
-        { id: 1, name: "Złączka rowkowana", price: 10 },
-        { id: 2, name: "Kolano rowkowane", price: 20 },
-        { id: 3, name: "Dekiel", price: 15 },
-    ];
-    const sizes = ['25', '32', '40', '50', '65', '80'];
-    const colors = ['RAL3000', 'ocynk'];
+
 
     const [selectedProducts, setSelectedProducts] = useState([
         {
@@ -28,12 +22,12 @@ export default function OrderDataTable() {
             totalPrice: 0,
             action: null,
         }
-        ]);
+    ]);
 
     const [selectedCurrency, setSelectedCurrency] = useState(""); // Wybrana waluta
-    const [exchangeRateData, setExchangeRateData] = useState({}); // Dane dotyczące kursów walut
+    const [exchangeRateData, setExchangeRateData] = useState([]); // Dane dotyczące kursów walut
     const [selectedDate, setSelectedDate] = useState(""); // Wybrana data
-    const [availableDates, setAvailableDates] = useState([]);
+    const [todayRate, setTodayRate] = useState(0);
 
 
     const getProductPrice = (productName) => {
@@ -94,19 +88,28 @@ export default function OrderDataTable() {
         const fetchExchangeRates = async () => {
             try {
                 const response = await fetch(
-                    "http://api.nbp.pl/api/exchangerates/tables/A/?format=json"
+                    "http://api.nbp.pl/api/exchangerates/tables/A/last/30?format=json"
                 );
                 const data = await response.json();
-                setExchangeRateData(data[0].rates);
+                const rates = data[0].rates;
+                console.log("Exchange rate data:", rates);
+
+                const today = new Date().toISOString().split("T")[0];
+                const todayRate = rates.find((rate) => rate.effectiveDate === today);
+                if (todayRate) {
+                    setTodayRate(todayRate.mid);
+                } else {
+                    setTodayRate(0);
+                }
+
+                setExchangeRateData(rates);
+                setSelectedDate(today);
             } catch (error) {
                 console.log("Error fetching exchange rates:", error);
             }
         };
 
-
-
         fetchExchangeRates();
-
     }, []);
 
 
@@ -143,15 +146,6 @@ export default function OrderDataTable() {
         return totalSummary;
     };
 
-
-    const handleCurrencyChange = (e) => {
-        setSelectedCurrency(e.target.value);
-    };
-
-    const handleDateChange = (e) => {
-        setSelectedDate(e.target.value);
-    };
-
     const convertCurrency = () => {
         const selectedRate = exchangeRateData.find(
             (rate) => rate.code === selectedCurrency
@@ -163,6 +157,10 @@ export default function OrderDataTable() {
         return "";
     };
 
+    const handleCurrencyChange = (e) => {
+        const { value } = e.target;
+        setSelectedCurrency(value);
+    };
 
     const renderTableRows = () => {
         return selectedProducts.map((product) => (
@@ -251,13 +249,8 @@ export default function OrderDataTable() {
     };
 
 
-    const renderDateOptions = () => {
-        return availableDates.map((date, index) => (
-            <option key={index} value={date}>
-                {date}
-            </option>
-        ));
-    };
+
+
 
     return (
         <div>
@@ -307,11 +300,7 @@ export default function OrderDataTable() {
                             </select>
                         </div>
                         <div className="dateInfo">
-                            <span>Kurs z dnia:</span>
-                            <select className="dateSelect" onChange={handleDateChange}>
-                                <option value="">Wybierz datę</option>
-                                {renderDateOptions()}
-                            </select>
+                            <span>Kurs z dnia: {selectedDate}</span>
                         </div>
                     </div>
                     <div className="currencyConverted">
@@ -319,7 +308,7 @@ export default function OrderDataTable() {
                             <span>
                                 {convertCurrency()} {selectedCurrency}
                             </span>
-                            )}
+                        )}
                     </div>
                 </div>
             </div>
