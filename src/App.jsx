@@ -33,7 +33,8 @@ function App() {
                   <Sidebar/>
                   <Routes>
                       <Route path="/loginPage" element={ <LoginPage/> } />
-                      <Route path="/" element={ <Pulpit /> } />
+                      <Route path="/" element={<Navigate to="/loginPage"/>}/>
+                      <Route path="/pulpit" element={ <Pulpit /> } />
                       <Route path="/OrderList" element={ <OrderList/> }/>
                       <Route path="/createOrder" element={ <CreateOrder/> }/>
                   </Routes>

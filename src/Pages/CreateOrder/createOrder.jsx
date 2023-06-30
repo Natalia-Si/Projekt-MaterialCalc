@@ -64,10 +64,6 @@ export default function CreateOrder() {
                         <OrderDataTable/>
                     </div>
 
-                    {/*Kalkulator walut osobny komponent */}
-                    <div className="currencyCalculator">
-
-                    </div>
                 </div>
             </div>
         </OrderProvider>

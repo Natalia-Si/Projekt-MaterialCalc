@@ -22,7 +22,7 @@ export default function LoginForm() {
                 // Signed in
                 const user = userCredential.user;
                 // console.log(user)
-                navigate("/")
+                navigate("/pulpit")
             })
             .catch((error) => {
                 setError(true)

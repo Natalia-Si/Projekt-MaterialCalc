@@ -25,7 +25,7 @@ export default function OrderDataTable() {
     ]);
 
     const [selectedCurrency, setSelectedCurrency] = useState(""); // Wybrana waluta
-    const [exchangeRateData, setExchangeRateData] = useState([]); // Dane dotyczące kursów walut
+    const [exchangeRateData, setExchangeRateData] = useState([]); // Kurs walut
     const [selectedDate, setSelectedDate] = useState(""); // Wybrana data
     const [todayRate, setTodayRate] = useState(0);
 
@@ -94,15 +94,15 @@ export default function OrderDataTable() {
                 const rates = data[0].rates;
                 console.log("Exchange rate data:", rates);
 
-                const today = new Date().toISOString().split("T")[0];
-                const todayRate = rates.find((rate) => rate.effectiveDate === today);
-                if (todayRate) {
-                    setTodayRate(todayRate.mid);
+                const selectedRate = rates.find((rate) => rate.code === selectedCurrency);
+                if (selectedRate) {
+                    setTodayRate(selectedRate.mid);
                 } else {
                     setTodayRate(0);
                 }
 
                 setExchangeRateData(rates);
+                const today = new Date().toISOString().split("T")[0];
                 setSelectedDate(today);
             } catch (error) {
                 console.log("Error fetching exchange rates:", error);
@@ -110,8 +110,7 @@ export default function OrderDataTable() {
         };
 
         fetchExchangeRates();
-    }, []);
-
+    }, [selectedCurrency]);
 
     const calculateTotalPricesRow = () => {
         const updatedProducts = selectedProducts.map((product) => {
@@ -248,10 +247,6 @@ export default function OrderDataTable() {
         ) : null;
     };
 
-
-
-
-
     return (
         <div>
             <TableContainer component={Paper}>
@@ -285,6 +280,7 @@ export default function OrderDataTable() {
                     </TableBody>
                 </Table>
             </TableContainer>
+
             {/*CURRENCY CALCULATOR*/}
             <div className="currencyCalc">
                 <div className="exchangeData">
@@ -302,6 +298,7 @@ export default function OrderDataTable() {
                         <div className="dateInfo">
                             <span>Kurs z dnia: {selectedDate}</span>
                         </div>
+                        <div className="currencyValue">Wartość kursu: {selectedCurrency} jest równa {todayRate} PLN</div>
                     </div>
                     <div className="currencyConverted">
                         {selectedCurrency && selectedDate && (

@@ -12,7 +12,7 @@ export default function Sidebar() {
             <div className="sidebarWrapper">
                 <div className="sidebarMenu">
                     <ul className="sidebarList">
-                        <Link to="/" style={ {textDecoration: "none", color: "white"} }>
+                        <Link to="/pulpit" style={ {textDecoration: "none", color: "white"} }>
                             <li className="sidebarListItem">
                                 <DashboardIcon className="sidebarIcon" fontSize="large"/>
                                 Pulpit
